@@ -1,0 +1,259 @@
+<!DOCTYPE html> 
+<html>
+	<head>
+		<title>Andrew Kulinich - UI/UX expert</title>
+		<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+		<script src="http://4vanger.com/libs/jquery.tmpl.js"></script>
+		<script src="http://4vanger.com/libs/underscore.js"></script>
+		<link href="resume.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript">
+/**
+ * Welcome to secret CV level.
+ * Code below uses some funny Javascript tricks.
+ * Don't think I'm writing such kind of code for production :)
+ **/
+$(function(){
+	var resume = {
+		name: "boom galaxy galaxy dna javascript htc ini lupus google",// WTF?
+		nickname: "4vanger",
+		desiredPosition: "UI/UX expert, javascript team lead",
+		birthTimestamp: 429408000000,
+		viagraPillsUsed: Math.floor(Math.PI) - Math.round(Math.E),
+		notes: "Few words about myself to make this resume less formal.\n\
+			When I got interested how whisky is made - I built my own distillery at home. Yes, I'm hacker - I'm interested how things are made.\n\
+			When something is not working correctly - I will get to the root of problem, fix it and learn from that.\n\
+			I hate poorly written code, incorrect indents or inconsistently named variables. Code should be perfect - only then it will work correctly.\n\
+			I love Javascript a lot because it is so easy and agile. And today I could write anything with Javascript - not only browser UI, but also server-side and mobile apps. I love it so much that even this resume is written on Javascript - check out page source.\n\
+			I live in Ukraine, but I'm ok to relocate if necessary.",
+		education: "Ukraine, Chernivtsi National University 2000-2005, Master's degree on CS",
+		codeLinesWritten: Infinity,
+		iAmUsingGotoOperator: 3.3 * 3 == 9.9,
+		jobs: [
+			{
+				company: "IT Group",
+				href: "http://www.itgrp.net/",
+				position: "Web developer, project manager",
+				notes: "My first job, using Ruby (my love!), first projects with JS. Acting as a project manager.",
+				startTimestamp: 1044057600000,
+				finishTimestamp: 1096588800000
+			},
+			{
+				company: "U-wiss",
+				href: "http://www.u-wiss.com/",
+				position: "Java/Javascript web developer",
+				notes: "Started as a Java developer - building all that huge ERP, B2B systems using JBoss, EJB etc. Then switched to writing Javascript and stucked there for next 6 years (at present moment)",
+				startTimestamp: 1096588800000,
+				finishTimestamp: 1146441600000
+			},
+			{
+				company: "Self-employed",
+				href: "http://www.rentacoder.com/",
+				position: "Freelance developer",
+				notes: "Great way to learn something new. Different tasks every day, working at night to get into customer timezone. Selling Javascript as my major skill.",
+				startTimestamp: 1117584000000,
+				finishTimestamp: 1133395200000
+			},
+			{
+				company: "Zapatec",
+				href: "http://www.zapatec.com/",
+				position: "AJAX tech lead, department manager",
+				notes: "Developing Zapatec AJAX Suite - commercial Javascript framework with very handy widgets. Opened an R&D office in Chernivtsi, Ukraine. Growing the team up to 12 developers.",
+				startTimestamp: 1146441600000,
+				finishTimestamp: 1225497600000
+			},
+			{
+				company: "Funambol",
+				href: "http://www.funambol.com/",
+				position: "AJAX tech lead, department manager",
+				notes: "Funambol acquired Zapatec and we concentrated on building solid web 2.0 app for working with phone sync data. <a href='http://my.funambol.com/' target='_blank'>Try it live</a>. Still managing ukrainian R&D office.",
+				startTimestamp: 1225497600000,
+				finishTimestamp: 1296518400000
+			},
+			{
+				company: "Appcelerator",
+				href: "http://www.appcelerator.com/",
+				position: "AJAX tech lead, department manager",
+				notes: "After Funambol my team started working for Appcelerator. We've created environment for creating, managing and running black-box tests for mobile applications. Also in a very short term developed <a href='http://developer.appcelerator.com/blog/2011/05/major-titanium-updates.html' target='_blank'>HTML5 Mobile Web SDK</a> for running your Titanium projects into browser.",
+				startTimestamp: 1296518400000
+			}
+		]
+	};
+
+	// what's that?!
+	resume.name = _.reduce(resume.name.split(" "), 
+		function(memo, str){
+			switch(memo.length){
+				case $: return        "q";
+				case 0: return memo + "w";
+				case 1: return memo + "e";
+				case 2: return memo + "r";
+				case 3: return memo + str.substr(0, 2);
+				case 4: return memo + "t";
+				case 5: return memo + " ";
+				case 6: return memo + str.slice(0, 1) + str.substr(2);
+				case 7: return memo + "y";
+				case 8: return memo + str;
+				case 9: return memo + "u";
+				case 10: return memo + "i";
+				case 11: return memo + str.slice(0, 2);
+			}
+			return memo;
+		}, "")
+	.split("")
+	.reverse()
+	.join("")
+	.replace(/(.*) (.*)/, // this eyes are watching you!
+	"A$2 K$1"),
+
+	resume.notesHTML = resume.notes.split("\n").join("<br />")
+	jQuery.tmpl($("#resume"), resume).appendTo(document.body);
+	
+	$(".toggle").toggle(
+		function(){
+			$(this).html("show all ("+(resume.jobs.length - 3)+" more)");
+			$("ul.jobs li").each(function(index, el){if(index > 2) $(el).hide();});
+		}, 
+		function(){
+			$(this).html("show recent");
+			$("ul.jobs li").show();
+		}
+	).click();
+});
+function date2str(date){
+	// TODO i18n
+	return (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+}
+var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+function dateMonth2str(date){
+	// TODO i18n
+	return MONTHS[date.getMonth()] + " " + date.getFullYear();
+}
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-149419-2']);
+  _gaq.push(['_setDomainName', '.4vanger.com']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+		</script>
+	</head>
+	<body>
+<script id="resume" type="jquery/template">
+<div class="content">
+	<h1 class="name">${name}</h1>
+	<span class="birthDate">(${date2str(new Date(birthTimestamp))})</span>
+	<ul class="links">
+		<li><a href="mailto:resume@${nickname}.com">email</a></li>
+		<li><a href="http://www.${nickname}.com">site</a></li>
+		<li><a href="http://www.twitter.com/${nickname}">twi</a></li>
+		<li><a href="http://www.facebook.com/${nickname}">fb</a></li>
+		<li><a href="http://www.google.com/profiles/${nickname}">buzz</a></li>
+		<li><a href="http://www.linkedin.com/in/${nickname}">#in</a></li>
+	</ul>
+	<p class="notes">{{html notesHTML}}</p>
+	
+	<h2>Education</h2>
+	<p>${education}</p>
+
+	<h2 class="experience">Job experience</h2>
+	<span class="clickable toggle">show all</span>
+	<ul class="jobs">
+		{{each(ii, job) jobs.reverse()}}
+			<li>
+				<h3>
+					<span class="position">${job.position}</span>, 
+					<span class="company"><a href="${job.href}">${job.company}</a></span>
+					<span class="dates">(${dateMonth2str(new Date(job.startTimestamp))} - 
+						{{if job.finishTimestamp == null}}
+							present
+						{{else}}
+							${dateMonth2str(new Date(job.finishTimestamp))}
+						{{/if}})
+					</span>
+				</h3>
+				<p>{{html job.notes}}</p>
+			</li>
+		{{/each}}
+	</ul>
+</div>
+</script>
+<noscript>
+<div class="content">
+	<h1 class="name">Andrew Kulinich</h1>
+	<span class="birthDate">(8/11/1983)</span>
+	<ul class="links">
+		<li><a href="mailto:resume@4vanger.com">email</a></li>
+		<li><a href="http://www.4vanger.com">site</a></li>
+		<li><a href="http://www.twitter.com/4vanger">twi</a></li>
+		<li><a href="http://www.facebook.com/4vanger">fb</a></li>
+		<li><a href="http://www.google.com/profiles/4vanger">buzz</a></li>
+		<li><a href="http://www.linkedin.com/in/4vanger">#in</a></li>
+	</ul>
+	<p class="notes">
+		Few words about myself to make this resume less formal.<br />
+		When I got interested how whisky is made - I built my own distillery at home. Yes, I'm hacker - I'm interested how things are made.<br />
+		When something is not working correctly - I will get to the root of problem, fix it and learn from that.<br />
+		I hate poorly written code, incorrect indents or inconsistently named variables. Code should be perfect - only then it will work correctly.<br />
+		I love Javascript a lot because it is so easy and agile. And today I could write anything with Javascript - not only browser UI, but also server-side and mobile apps. I love it so much that even this resume is written on Javascript - check out page source.<br/>
+		I live in Ukraine, but I'm ok to relocate if necessary.
+	</p>
+	<h2>Education</h2>
+	<p>Ukraine, Chernivtsi National University 2000-2005, Master's degree on CS</p>
+	<h2 class="experience">Job experience</h2>
+	<ul class="jobs">
+		<li>
+			<h3>
+				<span class="position">AJAX tech lead, department manager</span>, 
+				<span class="company"><a href="http://www.appcelerator.com/">Appcelerator</a></span>
+				<span class="dates">(February 2011 - present)</span>
+			</h3>
+			<p>After Funambol my team started working for Appcelerator. We've created environment for creating, managing and running black-box tests for mobile applications. Also in a very short term developed <a href="http://developer.appcelerator.com/blog/2011/05/major-titanium-updates.html" target="_blank">HTML5 Mobile Web SDK</a> for running your Titanium projects inside browser.</p>
+		</li>
+		<li>
+			<h3>
+				<span class="position">AJAX tech lead, department manager</span>,
+				<span class="company"><a href="http://www.funambol.com/">Funambol</a></span>
+				<span class="dates">(November 2008 - February 2011)</span>
+			</h3>
+			<p>Funambol acquired Zapatec and we concentrated on building solid web 2.0 app for working with phone sync data. <a href="http://my.funambol.com/" target="_blank">Try it live</a>. Still managing ukrainian R&amp;D office.</p>
+		</li>
+		<li>
+			<h3>
+				<span class="position">AJAX tech lead, department manager</span>, 
+				<span class="company"><a href="http://www.zapatec.com/">Zapatec</a></span>
+				<span class="dates">(May 2006 - November 2008)</span>
+			</h3>
+			<p>Developing Zapatec AJAX Suite - commercial Javascript framework with very handy widgets. Opened an R&amp;D office in Chernivtsi, Ukraine. Growing the team up to 12 developers.</p>
+		</li>
+		<li>
+			<h3>
+				<span class="position">Freelance developer</span>,
+				<span class="company"><a href="http://www.rentacoder.com/">Self-employed</a></span>
+				<span class="dates">(June 2005 - December 2005)</span>
+			</h3>
+			<p>Great way to learn something new. Different tasks every day, working at night to get into customer timezone. Selling Javascript as my major skill.</p>
+		</li>
+		<li>
+			<h3>
+				<span class="position">Java/Javascript web developer</span>,
+				<span class="company"><a href="http://www.u-wiss.com/">U-wiss</a></span>
+				<span class="dates">(October 2004 - May 2006)</span>
+			</h3>
+			<p>Started as a Java developer - building all that huge ERP, B2B systems using JBoss, EJB etc. Then switched to writing Javascript and stucked there for next 6 years (at present moment)</p>
+		</li>
+		<li>
+			<h3>
+				<span class="position">Web developer, project manager</span>,
+				<span class="company"><a href="http://www.itgrp.net/">IT Group</a></span>
+				<span class="dates">(February 2003 - October 2004)</span>
+			</h3>
+			<p>My first job, using Ruby (my love!), first projects with JS. Acting as a project manager.</p>
+		</li>
+	</ul>
+</div>
+</noscript>
+	</body>
+</html>

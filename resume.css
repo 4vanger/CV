@@ -1,0 +1,72 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-size: 14pt;
+	font-family: Helvetica, Verdana, Times New Roman, sans-serif;
+}
+
+body {
+	text-align: center; 
+	margin: 5em 0 0 0; 
+	vertical-align: middle;
+}
+
+.content {
+	width: 760px; 
+	text-align: left; 
+	margin: 0 auto; 
+} 
+
+.clickable {
+	cursor: pointer;
+	color: blue;
+	text-decoration: underline;
+}
+
+.birthDate {
+	margin: 1.5em 0 0 1em;
+	float: left;
+}
+
+.name {
+	font-size: 18pt;
+	margin: 1em 0;
+	float: left;
+}
+
+.links {
+	clear: both;
+	list-style: none;
+}
+
+.links li {
+	float: left;
+	margin-bottom: 1em;
+	padding-right: 0.5em;
+}
+
+.notes {
+	clear: both;
+}
+
+.jobs {
+	list-style: none;
+	clear: both;
+}
+
+.jobs li {
+	margin-top: 1em;
+}
+
+h2 {
+	margin-top: 1em;
+}
+
+.experience {
+	float: left;
+}
+
+.toggle {
+	margin: 1em 0 0 1em;
+	float: left;
+}
