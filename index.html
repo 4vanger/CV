@@ -1,7 +1,7 @@
 <!DOCTYPE html> 
 <html>
 	<head>
-		<title>Andrew Kulinich - rich UI dev expert</title>
+		<title>Andrew Kulinich - UI development expert, javascript team lead</title>
 		<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
 		<script src="http://4vanger.com/libs/jquery.tmpl.js"></script>
 		<script src="http://4vanger.com/libs/underscore.js"></script>
@@ -76,6 +76,49 @@ $(function(){
 				notes: "After Funambol my team started working for Appcelerator. We've created environment for creating, managing and running black-box tests for mobile applications. Also in a very short term developed <a href='http://developer.appcelerator.com/blog/2011/05/major-titanium-updates.html' target='_blank'>HTML5 Mobile Web SDK</a> for running your Titanium projects into browser.",
 				startTimestamp: 1296518400000
 			}
+		],
+		projects: [
+			{
+				name: "Bugazza team",
+				href: "http://www.bugazza.com/",
+				description: "Created a team and grew it from scratch.",
+				experienceGained: "Hiring people, firing people, managing relations inside the team, supporting office work, finding a customers.",
+				status: "Great team. Enjoying working with my friends every day.",
+				startTimestamp: 1146441600000
+			},
+			{
+				name: 'Email-Me-Not',
+				href: "https://www.email-me-not.com/",
+				startTimestamp: 1275350400000,
+				description: "Stores account data for your online accounts, provides good unique passwords, strongly encrypts everything, provides unique email address for every account that redirects mail for your account.",
+				status: "Launched, actively using myself. For public usage must spent more time on design and bug fixing",
+				experienceGained: "Working with mail server, learned jQuery, encryption in PHP."
+			},
+			{
+				name: 'Service Book',
+				description: "Low-end cell phones application to provide a local services directory. Order taxi, pizza or get latest football results using your feature phone.",
+				experienceGained: "Entrepreneur skills +20, writing pitch, executive summary, calculating financials and figuring out business models.",
+				status: "Closed. We had good idea, great business advisory and almost had our first big customer. Decided to stop development because this is not our area of competence.",
+				startTimestamp: 1296518400000,
+				finishTimestamp: 1301616000000
+			},
+			{
+				name: 'Oolli2',
+				description: "Social game on FB",
+				experienceGained: "Graph API, FBJS, FBML, FBQL.",
+				status: "Not implemented since I've switched to next project",
+				startTimestamp: 1293840000000,
+				finishTimestamp: 1296518400000
+			},
+			{
+			    name: "Oolli",
+				href: "http://www.oolli.com",
+				description: "Play using modern web-services like twitter or facebook. Do some social actions as a challenges.",
+				experienceGained: "oAuth, FB Graph API, learned about gamification, challenges. Gained entepreneur experience - writing a elevator pitch and executive summary.",
+				status: "Dead - after all development we figured out that there is no market for this product.",
+				startTimestamp: 1283299200000,
+				finishTimestamp: 1291161600000
+			}
 		]
 	};
 
@@ -107,17 +150,40 @@ $(function(){
 
 	resume.notesHTML = resume.notes.split("\n").join("<br />")
 	jQuery.tmpl($("#resume"), resume).appendTo(document.body);
-	
-	$(".toggle").toggle(
-		function(){
-			$(this).html("show all ("+(resume.jobs.length - 3)+" more)");
-			$("ul.jobs li").each(function(index, el){if(index > 2) $(el).hide();});
-		}, 
-		function(){
-			$(this).html("show recent");
-			$("ul.jobs li").show();
+
+	var toggleMoreRowsFunc = function(isShow, list, selector){
+		selector = $(selector);
+		var ul = selector.nextAll('ul').eq(0);
+		ul.find('li').each(function(index, el){
+			var li = $(el);
+			if(isShow){
+				li.show()
+			} else if(index > 2){
+				li.hide();
+			}
+		});
+
+		var more = ul.nextAll('.more').eq(0);
+		if(isShow){
+			selector.html('show recent');
+			more.hide()
+		} else {
+			more.show();
+			selector.html('show ' + (list.length - 3) + " more");
+			more.html(list.length - 3 + " more");
 		}
-	).click();
+
+		if(list.length < 3){
+			selector.hide();
+			more.hide();
+		}
+	};
+	
+	_.each({".toggleJobs": resume.jobs, ".toggleProjects": resume.projects}, function(list, selector){
+		$(selector).toggle(function(){toggleMoreRowsFunc(true, list, selector);}, function(){toggleMoreRowsFunc(false, list, selector);});
+		toggleMoreRowsFunc(false, list, selector);
+		$(selector).nextAll('.more').eq(0).click(function(){$(selector).click();});
+	});
 });
 function date2str(date){
 	// TODO i18n
@@ -144,7 +210,6 @@ function dateMonth2str(date){
 <script id="resume" type="jquery/template">
 <div class="content">
 	<h1 class="name">${name}</h1>
-	<span class="birthDate">(${date2str(new Date(birthTimestamp))})</span>
 	<ul class="links">
 		<li><a href="mailto:resume@${nickname}.com">email</a></li>
 		<li><a href="http://www.${nickname}.com">site</a></li>
@@ -153,14 +218,14 @@ function dateMonth2str(date){
 		<li><a href="http://www.google.com/profiles/${nickname}">buzz</a></li>
 		<li><a href="http://www.linkedin.com/in/${nickname}">#in</a></li>
 	</ul>
-	<p class="notes">{{html notesHTML}}</p>
+	<p class="notes clearfix">{{html notesHTML}}</p>
 	
 	<h2>Education</h2>
-	<p>${education}</p>
+	<p class="clearfix">${education}</p>
 
 	<h2 class="experience">Job experience</h2>
-	<span class="clickable toggle">show all</span>
-	<ul class="jobs">
+	<span class="clickable toggle toggleJobs"></span>
+	<ul class="jobs clearfix">
 		{{each(ii, job) jobs.reverse()}}
 			<li>
 				<h3>
@@ -178,81 +243,38 @@ function dateMonth2str(date){
 			</li>
 		{{/each}}
 	</ul>
+	<div class="more clickable">More...</div>
+
+	<h2 class="experience">My pet projects</h2>
+	<span class="clickable toggle toggleProjects"></span>
+	<ul class="projects clearfix">
+		{{each(ii, project) projects}}
+			<li>
+				<h3>
+					{{if project.href}}
+						<a href="${project.href}">${project.name}</a>
+					{{else}}
+						${project.name}
+					{{/if}}
+					<span class="dates">(${dateMonth2str(new Date(project.startTimestamp))} - 
+						{{if project.finishTimestamp == null}}
+							present
+						{{else}}
+							${dateMonth2str(new Date(project.finishTimestamp))}
+						{{/if}})
+					</span>
+				</h3>
+				<p class="description">${description}</p>
+				<p class="experience">${experienceGained}</p>
+				<p class="status">${status}</p>
+			</li>
+		{{/each}}
+	</ul>
+	<div class="more clickable">More...</div>
 </div>
 </script>
 <noscript>
 <div class="content">
-	<h1 class="name">Andrew Kulinich</h1>
-	<span class="birthDate">(8/11/1983)</span>
-	<ul class="links">
-		<li><a href="mailto:resume@4vanger.com">email</a></li>
-		<li><a href="http://www.4vanger.com">site</a></li>
-		<li><a href="http://www.twitter.com/4vanger">twi</a></li>
-		<li><a href="http://www.facebook.com/4vanger">fb</a></li>
-		<li><a href="http://www.google.com/profiles/4vanger">buzz</a></li>
-		<li><a href="http://www.linkedin.com/in/4vanger">#in</a></li>
-	</ul>
-	<p class="notes">
-		Few words about myself to make this resume less formal.<br />
-		When I got interested how whisky is made - I built my own distillery at home. Yes, I'm hacker - I'm interested how things are made.<br />
-		When something is not working correctly - I will get to the root of problem, fix it and learn from that.<br />
-		I hate poorly written code, incorrect indents or inconsistently named variables. Code should be perfect - only then it will work correctly.<br />
-		I love Javascript a lot because it is so easy and agile. And today I could write anything with Javascript - not only browser UI, but also server-side and mobile apps. I love it so much that even this resume is written on Javascript - check out page source.<br/>
-		I live in Ukraine, but I'm ok to relocate if necessary.
-	</p>
-	<h2>Education</h2>
-	<p>Ukraine, Chernivtsi National University 2000-2005, Master's degree on CS</p>
-	<h2 class="experience">Job experience</h2>
-	<ul class="jobs">
-		<li>
-			<h3>
-				<span class="position">AJAX tech lead, department manager</span>, 
-				<span class="company"><a href="http://www.appcelerator.com/">Appcelerator</a></span>
-				<span class="dates">(February 2011 - present)</span>
-			</h3>
-			<p>After Funambol my team started working for Appcelerator. We've created environment for creating, managing and running black-box tests for mobile applications. Also in a very short term developed <a href="http://developer.appcelerator.com/blog/2011/05/major-titanium-updates.html" target="_blank">HTML5 Mobile Web SDK</a> for running your Titanium projects inside browser.</p>
-		</li>
-		<li>
-			<h3>
-				<span class="position">AJAX tech lead, department manager</span>,
-				<span class="company"><a href="http://www.funambol.com/">Funambol</a></span>
-				<span class="dates">(November 2008 - February 2011)</span>
-			</h3>
-			<p>Funambol acquired Zapatec and we concentrated on building solid web 2.0 app for working with phone sync data. <a href="http://my.funambol.com/" target="_blank">Try it live</a>. Still managing ukrainian R&amp;D office.</p>
-		</li>
-		<li>
-			<h3>
-				<span class="position">AJAX tech lead, department manager</span>, 
-				<span class="company"><a href="http://www.zapatec.com/">Zapatec</a></span>
-				<span class="dates">(May 2006 - November 2008)</span>
-			</h3>
-			<p>Developing Zapatec AJAX Suite - commercial Javascript framework with very handy widgets. Opened an R&amp;D office in Chernivtsi, Ukraine. Growing the team up to 12 developers.</p>
-		</li>
-		<li>
-			<h3>
-				<span class="position">Freelance developer</span>,
-				<span class="company"><a href="http://www.rentacoder.com/">Self-employed</a></span>
-				<span class="dates">(June 2005 - December 2005)</span>
-			</h3>
-			<p>Great way to learn something new. Different tasks every day, working at night to get into customer timezone. Selling Javascript as my major skill.</p>
-		</li>
-		<li>
-			<h3>
-				<span class="position">Java/Javascript web developer</span>,
-				<span class="company"><a href="http://www.u-wiss.com/">U-wiss</a></span>
-				<span class="dates">(October 2004 - May 2006)</span>
-			</h3>
-			<p>Started as a Java developer - building all that huge ERP, B2B systems using JBoss, EJB etc. Then switched to writing Javascript and stucked there for next 6 years (at present moment)</p>
-		</li>
-		<li>
-			<h3>
-				<span class="position">Web developer, project manager</span>,
-				<span class="company"><a href="http://www.itgrp.net/">IT Group</a></span>
-				<span class="dates">(February 2003 - October 2004)</span>
-			</h3>
-			<p>My first job, using Ruby (my love!), first projects with JS. Acting as a project manager.</p>
-		</li>
-	</ul>
 </div>
 </noscript>
 	</body>

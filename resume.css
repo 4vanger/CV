@@ -1,7 +1,7 @@
 * {
 	margin: 0;
 	padding: 0;
-	font-size: 14pt;
+	font-size: 12pt;
 	font-family: Helvetica, Verdana, Times New Roman, sans-serif;
 }
 
@@ -23,15 +23,9 @@ body {
 	text-decoration: underline;
 }
 
-.birthDate {
-	margin: 1.5em 0 0 1em;
-	float: left;
-}
-
 .name {
 	font-size: 18pt;
-	margin: 1em 0;
-	float: left;
+	margin: 1em 0 0 -1em;
 }
 
 .links {
@@ -45,21 +39,26 @@ body {
 	padding-right: 0.5em;
 }
 
-.notes {
+.clearfix {
 	clear: both;
 }
 
-.jobs {
+.jobs, .projects {
 	list-style: none;
-	clear: both;
 }
 
-.jobs li {
+.jobs li,
+.projects li {
 	margin-top: 1em;
 }
 
 h2 {
-	margin-top: 1em;
+	margin: 1em 0 0 -1em;
+}
+
+ul h3 {
+	font-style: italic;
+	font-weight: bold;
 }
 
 .experience {
